@@ -1,22 +1,18 @@
-# Base image
+# Base image with Node.js and browsers
 FROM cypress/browsers:node16.14.0-chrome100-ff99-edge
 
 # Set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-# base image
-FROM cypress/browsers:chrome65-ff57
-
-# set working directory
-RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-# install cypress
+# Install Cypress
 RUN npm install cypress@13.13.1
 
-# copy cypress files and folders
+# Copy Cypress configuration and tests
 COPY cypress /usr/src/app/cypress
-COPY cypress.json /usr/src/app/cypress.json
+COPY cypress.config.js /usr/src/app/cypress.config.js
 
-# confirm the cypress install
-RUN ./node_modules/.bin/cypress verify
+# Confirm the Cypress installation
+RUN npx cypress verify
+
+# Entrypoint for running Cypress tests
+ENTRYPOINT ["npx", "cypress", "run"]
