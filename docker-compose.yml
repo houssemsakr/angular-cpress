@@ -6,13 +6,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4200:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   cypress:
     build:
       context: .
       dockerfile: Dockerfile-cypress
     depends_on:
-      - angular
+      angular:
+        condition: service_healthy
     environment:
       - DISPLAY=:99
     entrypoint: /bin/sh -c "Xvfb :99 -screen 0 1280x1024x24 & ./node_modules/.bin/cypress run --config-file cypress.config.js"
