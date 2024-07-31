@@ -1,3 +1,5 @@
+
+
 version: '3.6'
 services:
   angular:
@@ -13,4 +15,3 @@ services:
       dockerfile: Dockerfile-cypress
     depends_on:
       - angular
-    network_mode: 'host'
