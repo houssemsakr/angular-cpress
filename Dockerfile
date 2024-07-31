@@ -23,7 +23,7 @@ RUN npm install --legacy-peer-deps
 COPY . /usr/src/app
 
 # Build the application
-RUN ng build --prod
+RUN ng build --configuration production
 
 ##################
 ### production ###
