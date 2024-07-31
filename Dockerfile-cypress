@@ -1,6 +1,11 @@
 # Base image with Node.js and browsers
 FROM cypress/browsers:node-20.15.1-chrome-127.0.6533.72-1-ff-128.0-edge-126.0.2592.102-1
 
+# Install Xvfb and other dependencies
+RUN apt-get update && apt-get install -y \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /usr/src/app
 
@@ -14,5 +19,5 @@ COPY cypress.config.js /usr/src/app/cypress.config.js
 # Confirm the Cypress installation
 RUN npx cypress verify
 
-# Entrypoint for running Cypress tests
-ENTRYPOINT ["npx", "cypress", "run"]
+# Start Xvfb and run Cypress tests
+ENTRYPOINT ["sh", "-c", "Xvfb :99 -screen 0 1280x1024x24 & npx cypress run --config-file cypress.config.js"]
