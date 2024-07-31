@@ -1,3 +1,7 @@
+#########################
+### build environment ###
+#########################
+
 # Stage 1: Builder
 FROM node:18.19.1 AS builder
 
@@ -15,12 +19,15 @@ RUN npm install -g @angular/cli@17
 # Copy application code and dependencies
 COPY package.json /usr/src/app/package.json
 RUN npm install --legacy-peer-deps
-
-# Add app
+# add app
 COPY . /usr/src/app
 
 # Build the application
 RUN ng build --configuration production
+
+##################
+### production ###
+##################
 
 # Stage 2: Nginx
 FROM nginx:1.13.9-alpine
@@ -30,8 +37,6 @@ COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD curl -f http://localhost:80 || exit 1
 
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD curl -f http://localhost:80 || exit 1
