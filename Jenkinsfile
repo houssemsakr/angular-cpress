@@ -49,6 +49,19 @@ pipeline {
                 }
             }
         }
+        stage('Wait for Angular') {
+            steps {
+                script {
+                    // Wait until Angular application is up and running
+                    sh '''
+                    until curl -sSf http://localhost:4200 > /dev/null; do
+                      echo "Waiting for Angular application..."
+                      sleep 5
+                    done
+                    '''
+                }
+            }
+        }
         stage('Run Cypress Tests') {
             steps {
                 script {
