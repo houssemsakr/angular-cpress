@@ -5,7 +5,7 @@ pipeline {
         GITHUB_CREDENTIALS_ID = 'github' // L'ID des informations d'identification GitHub dans Jenkins
         DOCKERHUB_USERNAME = 'houssem1988' // Votre nom d'utilisateur Docker Hub
         DOCKERHUB_PASSWORD = 'dckr_pat__o7UwyM3sqq65CusO3adbSx8qTQ' // Votre mot de passe Docker Hub
-        DOCKER_COMPOSE_VERSION = '1.21.1'
+        DOCKER_COMPOSE_VERSION = '2.10.2' // Version plus récente de Docker Compose
         PATH = "${PATH}:/home/jenkins/bin"
     }
 
@@ -32,9 +32,10 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
-                    // Installer Docker Compose
+                    // Créer le répertoire /home/jenkins/bin si nécessaire
                     sh '''
-                    curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /home/jenkins/bin/docker-compose
+                    mkdir -p /home/jenkins/bin
+                    curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /home/jenkins/bin/docker-compose
                     chmod +x /home/jenkins/bin/docker-compose
                     '''
                 }
