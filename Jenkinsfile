@@ -20,7 +20,7 @@ pipeline {
                     // Cloner le dépôt en utilisant les informations d'identification GitHub
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: '*/master']],
+                        branches: [[name: '*/main']],
                         userRemoteConfigs: [[
                             url: 'https://github.com/houssemsakr/angular-cypress.git',
                             credentialsId: env.GITHUB_CREDENTIALS_ID
