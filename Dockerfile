@@ -5,24 +5,23 @@
 # Stage 1: Builder
 FROM node:18.19.1 AS builder
 
-# set working directory
-RUN mkdir /usr/src/app
+# Set working directory
 WORKDIR /usr/src/app
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
+# Add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-# install and cache app dependencies
-COPY package.json /usr/src/app/package.json
-RUN npm install --production --legacy-peer-deps
 # Install Angular CLI globally
 RUN npm install -g @angular/cli@17
 
+# Copy application code and dependencies
+COPY package.json /usr/src/app/package.json
+RUN npm install --legacy-peer-deps
 # add app
 COPY . /usr/src/app
 
-# generate build
-RUN npm run build
+# Build the application
+RUN ng build --prod
 
 ##################
 ### production ###
@@ -31,11 +30,11 @@ RUN npm run build
 # Stage 2: Nginx
 FROM nginx:1.13.9-alpine
 
-# copy artifact build from the 'build environment'
+# Copy built application from the 'build environment'
 COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
-# expose port 80
+# Expose port 80
 EXPOSE 80
 
-# run nginx
+# Run nginx
 CMD ["nginx", "-g", "daemon off;"]
