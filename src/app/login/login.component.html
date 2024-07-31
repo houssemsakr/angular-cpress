@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="login-form">
+      <h1 id="loginFormTitle">Login Form</h1>
+      <form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="loginFormEmailInput" name="email" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            #email="ngModel" ngModel>
+          <div *ngIf="!email.valid && email.touched">
+            <p>Enter valid Email</p>
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <label for="password">Password</label>
+          <input type="password" id="loginFormPasswordInput" name="password" class="form-control" required #password="ngModel"
+            minlength="5" ngModel>
+          <div *ngIf="!password.valid && password.touched">
+            <p>Please enter valid Password!</p>
+            <p>Password should be minimum 5 characters</p>
+          </div>
+        </div>
+        <button type="submit" id="loginFormSubmitButton" class="btn btn-primary mt-3" [disabled]="!myForm.valid">Submit</button>
+      </form>
+      <div class="row" *ngIf="isSubmitted">
+        <div class="col-sm-12">
+          <p id="loginFormEmailInputValue">Email: {{ email.value }}</p>
+          <p id="loginFormPasswordInputValue">Password: {{ password.value }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+

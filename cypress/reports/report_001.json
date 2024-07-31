@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-07-29T11:09:49.412Z",
+    "end": "2024-07-29T11:09:55.465Z",
+    "duration": 6053,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "072977d3-9293-4663-8db9-20cc399e8c27",
+      "title": "",
+      "fullFile": "cypress/e2e/combined.cy.js",
+      "file": "cypress/e2e/combined.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "2ae2ad8d-7549-4ab9-8020-6236517b90cb",
+          "title": "User Flow from Login to Dashboard",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should login and navigate to dashboard",
+              "fullTitle": "User Flow from Login to Dashboard should login and navigate to dashboard",
+              "timedOut": null,
+              "duration": 3011,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Visitez la page de login\ncy.visit('/login');\n// Vérifiez que la page de login est chargée\ncy.url().should('include', '/login');\ncy.get('#loginFormEmailInput').should('exist'); // Corrigez le sélecteur\ncy.get('#loginFormPasswordInput').should('exist'); // Corrigez le sélecteur\ncy.get('#loginFormSubmitButton').should('exist'); // Corrigez le sélecteur\n// Remplissez le formulaire de login et soumettez-le\ncy.get('#loginFormEmailInput').type('user@example.com');\ncy.get('#loginFormPasswordInput').type('password123');\ncy.get('#loginFormSubmitButton').click();\n// Vérifiez la redirection vers le dashboard\ncy.url().should('include', '/dashboard');\n// Vérifiez que la page de dashboard est chargée\ncy.contains('Add User').should('be.visible');",
+              "err": {},
+              "uuid": "a3055fb5-1747-443c-a926-80d7a0426758",
+              "parentUUID": "2ae2ad8d-7549-4ab9-8020-6236517b90cb",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should add a user and remove all users",
+              "fullTitle": "User Flow from Login to Dashboard should add a user and remove all users",
+              "timedOut": null,
+              "duration": 2980,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Visitez la page de dashboard après s'être connecté\ncy.visit('/dashboard');\n// Remplissez le formulaire d'ajout d'utilisateur et soumettez-le\ncy.get('#firstName').should('be.visible').type('John');\ncy.get('#lastName').should('be.visible').type('Doe');\ncy.get('#mobileNumber').should('be.visible').type('1234567890');\ncy.get('button[type=\"submit\"]').should('be.visible').click();\n// Attendez 2 secondes pour que la liste des utilisateurs se mette à jour\ncy.wait(2000);\n// Vérifiez que les valeurs sont affichées dans la liste des utilisateurs\ncy.contains('John').should('be.visible');\ncy.contains('Doe').should('be.visible');\n// Cliquez sur le bouton \"Remove all\"\ncy.get('button.btn-danger').should('be.visible').click();\n// Vérifiez que la liste des utilisateurs est vide\ncy.get('table tbody tr').should('have.length', 0);",
+              "err": {},
+              "uuid": "979f1f12-9032-4a9a-8d97-5a3058675a84",
+              "parentUUID": "2ae2ad8d-7549-4ab9-8020-6236517b90cb",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a3055fb5-1747-443c-a926-80d7a0426758",
+            "979f1f12-9032-4a9a-8d97-5a3058675a84"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5991,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "reportFilename": "report",
+        "quiet": true,
+        "overwrite": false
+      },
+      "version": "6.2.0"
+    }
+  }
+}
