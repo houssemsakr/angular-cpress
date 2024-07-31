@@ -30,6 +30,8 @@ COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD curl -f http://localhost:80 || exit 1
 
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD curl -f http://localhost:80 || exit 1
