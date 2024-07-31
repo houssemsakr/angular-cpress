@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '8084:80'
+       - '4200:80'
   cypress:
     build:
       context: .
