@@ -5,20 +5,15 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "4200:80"
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
-
+       - '4200:4200'
   cypress:
     build:
       context: .
       dockerfile: Dockerfile-cypress
     depends_on:
-      angular:
+      - angular
+    network_mode: 'host'
+
         condition: service_healthy
     environment:
       - DISPLAY=:99
