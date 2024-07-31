@@ -62,6 +62,13 @@ pipeline {
                 }
             }
         }
+        stage('Kill Xvfb') {
+            steps {
+                script {
+                    sh 'pkill Xvfb || true'
+                }
+            }
+        }
         stage('Run Cypress Tests') {
             steps {
                 script {
