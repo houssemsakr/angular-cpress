@@ -1,11 +1,8 @@
-# Base image with Node.js and browsers
-FROM cypress/browsers:node-20.15.1-chrome-127.0.6533.72-1-ff-128.0-edge-126.0.2592.102-1
+# Use the Cypress included image with all dependencies
+FROM cypress/included:13.13.1
 
 # Set working directory
 WORKDIR /usr/src/app
-
-# Install Cypress
-RUN npm install cypress@13.13.1
 
 # Copy Cypress configuration and tests
 COPY cypress /usr/src/app/cypress
