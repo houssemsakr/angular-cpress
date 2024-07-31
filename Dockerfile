@@ -5,6 +5,8 @@
 # Stage 1: Builder
 FROM node:18.19.1 AS builder
 
+RUN apt-get update && apt-get install -y ca-certificates
+
 # Set working directory
 WORKDIR /usr/src/app
 
