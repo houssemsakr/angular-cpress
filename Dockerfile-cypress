@@ -1,5 +1,5 @@
 # Base image with Node.js and browsers
-FROM cypress/browsers:node18.0.0-chrome114-ff116
+FROM cypress/browsers:node-20.15.1-chrome-127.0.6533.72-1-ff-128.0-edge-126.0.2592.102-1
 
 # Set working directory
 WORKDIR /usr/src/app
