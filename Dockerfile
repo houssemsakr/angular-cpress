@@ -1,4 +1,3 @@
-# build environment
 FROM node:18.19.1 AS builder
 
 # Set the working directory
@@ -9,6 +8,9 @@ RUN npm install -g @angular/cli@17
 
 # Copy package.json and package-lock.json if available
 COPY package.json package-lock.json ./
+
+# Clean npm cache
+RUN npm cache clean --force
 
 # Install dependencies
 RUN npm install --legacy-peer-deps
