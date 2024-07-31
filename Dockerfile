@@ -13,9 +13,10 @@ COPY package.json package-lock.json ./
 # Clean npm cache
 RUN npm cache clean --force
 
-# Install dependencies
-# Adding --unsafe-perm to avoid permission issues
-RUN npm install --legacy-peer-deps --unsafe-perm
+# Install dependencies with retries to handle network issues
+RUN npm install --legacy-peer-deps --unsafe-perm || \
+    npm install --legacy-peer-deps --unsafe-perm || \
+    npm install --legacy-peer-deps --unsafe-perm
 
 # Copy the rest of the application code
 COPY . .
