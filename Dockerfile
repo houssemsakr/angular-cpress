@@ -1,3 +1,4 @@
+# Stage 1: Builder
 FROM node:18.19.1 AS builder
 
 # Set the working directory
@@ -13,7 +14,8 @@ COPY package.json package-lock.json ./
 RUN npm cache clean --force
 
 # Install dependencies
-RUN npm install --legacy-peer-deps
+# Adding --unsafe-perm to avoid permission issues
+RUN npm install --legacy-peer-deps --unsafe-perm
 
 # Copy the rest of the application code
 COPY . .
@@ -21,7 +23,7 @@ COPY . .
 # Build the Angular application
 RUN ng build --configuration production
 
-# production environment
+# Stage 2: Nginx
 FROM nginx:1.13.9-alpine
 
 # Copy built Angular app from the build stage
