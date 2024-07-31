@@ -4,22 +4,6 @@ FROM cypress/browsers:node-20.15.1-chrome-127.0.6533.72-1-ff-128.0-edge-126.0.25
 # Install Xvfb and other dependencies
 RUN apt-get update && apt-get install -y \
     xvfb \
-    libgtk2.0-0 \
-    libgbm1 \
-    libpango1.0-0 \
-    libatspi2.0-0 \
-    libx11-xcb1 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxrandr2 \
-    libxss1 \
-    libxtst6 \
-    libnss3 \
-    fonts-liberation \
-    libappindicator3-1 \
-    xdg-utils \
-    wget \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
