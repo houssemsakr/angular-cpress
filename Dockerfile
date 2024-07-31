@@ -1,37 +1,41 @@
+#########################
+### build environment ###
+#########################
+
 # Stage 1: Builder
 FROM node:18.19.1 AS builder
 
-# Set the working directory
+# set working directory
+RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
+# add `/usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json /usr/src/app/package.json
+RUN npm install --production
 # Install Angular CLI globally
 RUN npm install -g @angular/cli@17
 
-# Copy package.json and package-lock.json if available
-COPY package.json package-lock.json ./
+# add app
+COPY . /usr/src/app
 
-# Clean npm cache
-RUN npm cache clean --force
+# generate build
+RUN npm run build
 
-# Install dependencies with retries to handle network issues
-RUN npm install --legacy-peer-deps --unsafe-perm || \
-    npm install --legacy-peer-deps --unsafe-perm || \
-    npm install --legacy-peer-deps --unsafe-perm
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the Angular application
-RUN ng build --configuration production
+##################
+### production ###
+##################
 
 # Stage 2: Nginx
 FROM nginx:1.13.9-alpine
 
-# Copy built Angular app from the build stage
-COPY --from=builder /usr/src/app/dist/angular-cypress /usr/share/nginx/html
+# copy artifact build from the 'build environment'
+COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
-# Expose port 80 for the Nginx server
+# expose port 80
 EXPOSE 80
 
-# Run Nginx in the foreground
+# run nginx
 CMD ["nginx", "-g", "daemon off;"]
