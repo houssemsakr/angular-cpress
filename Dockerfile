@@ -1,7 +1,3 @@
-#########################
-### build environment ###
-#########################
-
 # Stage 1: Builder
 FROM node:18.19.1 AS builder
 
@@ -19,15 +15,12 @@ RUN npm install -g @angular/cli@17
 # Copy application code and dependencies
 COPY package.json /usr/src/app/package.json
 RUN npm install --legacy-peer-deps
-# add app
+
+# Add app
 COPY . /usr/src/app
 
 # Build the application
 RUN ng build --configuration production
-
-##################
-### production ###
-##################
 
 # Stage 2: Nginx
 FROM nginx:1.13.9-alpine
